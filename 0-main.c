@@ -1,5 +1,8 @@
 #include "monty.h"
 
+
+char *toks_num = NULL;
+
 /**
  * main - starting point for monty interpreter
  *
