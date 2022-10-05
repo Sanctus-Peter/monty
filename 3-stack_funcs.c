@@ -15,12 +15,12 @@ stack_t *add_new_node(int number)
 }
 
 /**
- * push - pushes an element to the stack
+ * monty_push - pushes an element to the stack
  * @stack: a double pointer to the stack
  * @line_number: the line at which this command is called
  * Return: nothing
  */
-void push(stack_t **stack, unsigned int line_number)
+void monty_push(stack_t **stack, unsigned int line_number)
 {
 	stack_t *start = stack, *temp;
 	int num = atoi(toks_num);
@@ -37,13 +37,13 @@ void push(stack_t **stack, unsigned int line_number)
 }
 
 /**
- * pall - prints all the values on the stack, starting
+ * monty_pall - prints all the values on the stack, starting
  * from the top of the stack
  * @stack: a double pointer to the stack
  * @line_number: the line at which this command is called
  * Return: nothing
  */
-void pall(stack_t **stack, unsigned int line_number)
+void monty_pall(stack_t **stack, unsigned int line_number)
 {
 	stack_t *temp = *stack;
 	(void)line_number;
@@ -56,12 +56,13 @@ void pall(stack_t **stack, unsigned int line_number)
 }
 
 /**
- * pint -  prints the value at the top of the stack, followed by a new line
+ * monty_pint -  prints the value at the top of the stack,
+ * followed by a new line
  * @stack: a double pointer to the stack
  * @line_number: the line at which this command is called
  * Return: nothing
  */
-void pint(stack_t **stack, unsigned int line_number)
+void monty_pint(stack_t **stack, unsigned int line_number)
 {
 	if (!(*stack))
 	{
