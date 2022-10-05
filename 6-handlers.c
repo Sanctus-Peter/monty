@@ -1,11 +1,11 @@
 #include "monty.h"
 
 /**
- * monty_rotr - Rotates the bottom value of a stack_t linked list to the top.
+ * rotr_handler - Rotates the bottom value of a stack_t linked list to the top.
  * @stack: A pointer to the top mode node of a stack_t linked list.
  * @line_number: The current working line number of a Monty bytecodes file.
  */
-void monty_rotr(stack_t **stack, unsigned int line_number)
+void rotr_handler(stack_t **stack, unsigned int line_number)
 {
 	stack_t *top, *bottom;
 
@@ -28,11 +28,11 @@ void monty_rotr(stack_t **stack, unsigned int line_number)
 
 
 /**
- * monty_rotl - Rotates the top value of a stack_t linked list to the bottom.
+ * rotl_handler - Rotates the top value of a stack_t linked list to the bottom.
  * @stack: A pointer to the top mode node of a stack_t linked list.
  * @line_number: The current working line number of a Monty bytecodes file.
  */
-void monty_rotl(stack_t **stack, unsigned int line_number)
+void rotl_handler(stack_t **stack, unsigned int line_number)
 {
 	stack_t *top, *bottom;
 
@@ -54,33 +54,33 @@ void monty_rotl(stack_t **stack, unsigned int line_number)
 }
 
 /**
- * monty_stack - Converts a queue to a stack.
+ * stack_handler - Converts a queue to a stack.
  * @stack: A pointer to the top mode node of a stack_t linked list.
  * @line_number: The current working line number of a Monty bytecodes file.
  */
-void monty_stack(stack_t **stack, unsigned int line_number)
+void stack_handler(stack_t **stack, unsigned int line_number)
 {
 	(*stack)->n = STACK;
 	(void)line_number;
 }
 
 /**
- * monty_queue - Converts a stack to a queue.
+ * queue_handler - Converts a stack to a queue.
  * @stack: A pointer to the top mode node of a stack_t linked list.
  * @line_number: The current working line number of a Monty bytecodes file.
  */
-void monty_queue(stack_t **stack, unsigned int line_number)
+void queue_handler(stack_t **stack, unsigned int line_number)
 {
 	(*stack)->n = QUEUE;
 	(void)line_number;
 }
 
 /**
- * monty_nop - Does absolutely nothing for the Monty opcode 'nop'.
+ * nop_handler - Does absolutely nothing for the Monty opcode 'nop'.
  * @stack: A pointer to the top mode node of a stack_t linked list.
  * @line_number: The current working line number of a Monty bytecodes file.
  */
-void monty_nop(stack_t **stack, unsigned int line_number)
+void nop_handler(stack_t **stack, unsigned int line_number)
 {
 	(void)stack;
 	(void)line_number;

@@ -1,122 +1,117 @@
 #include "monty.h"
 
 /**
- * monty_div - divides the second top element of the
+ * div_handler - divides the second top element of the
  * stack by the top element of the stack
  * @stack: double pointer to the stack
  * @line_no: the line in which this command is called
  * Return: nothing
  */
-void monty_div(stack_t **stack, unsigned int line_no)
+void div_handler(stack_t **stack, unsigned int line_no)
 {
-	int dividend, size;
-	stack_t *temp = *stack;
-
-	size = stack_size(*stack);
+	int size = stack_size((*stack)->next);
+	
 	if (size < 2)
 	{
 		fprintf(stderr, "L%d: can't div, stack too short\n", line_no);
-		exit(EXIT_FAILURE);
+		global.err_status = EXIT_FAILURE;
+		return;
 	}
-	if (!(temp->n))
+	if (!(*stack)->next->n)
 	{
 		fprintf(stderr, "L%d: division by zero\n", line_no);
-		exit(EXIT_FAILURE);
+		global.err_status = EXIT_FAILURE;
+		return;
 	}
-	dividend = temp->prev->n / temp->n;
-	temp->prev->n = dividend;
-	*stack = temp->prev;
-	(*stack)->next = NULL;
-	temp->prev = NULL;
-	free(temp);
+	
+	(*stack)->next->next->n /= (*stack)->next->n;
+	
+	pop_handler(stack, line_no);
 }
 
 /**
- * monty_mul - multiplies the second top element of the stack with
+ * mul_handler - multiplies the second top element of the stack with
  * the top element of the stack
  * @stack: double pointer to the stack
  * @line_no: the line in which this command is called
  * Return: nothing
  */
-void monty_mul(stack_t **stack, unsigned int line_no)
+void mul_handler(stack_t **stack, unsigned int line_no)
 {
-	int product, size;
-	stack_t *temp = *stack;
-
-	size = stack_size(*stack);
+	int size = stack_size((*stack)->next);
+	
 	if (size < 2)
 	{
 		fprintf(stderr, "L%d: can't mul, stack too short\n", line_no);
-		exit(EXIT_FAILURE);
+		global.err_status = EXIT_FAILURE;
+		return;
 	}
-	product = temp->prev->n * temp->n;
-	temp->prev->n = product;
-	*stack = temp->prev;
-	(*stack)->next = NULL;
-	temp->prev = NULL;
-	free(temp);
+	
+	(*stack)->next->next->n *= (*stack)->next->n;
+	
+	pop_handler(stack, line_no);
 }
 
 /**
- * monty_mod - computes the rest of the division of the
+ * mod_handler - computes the rest of the division of the
  * second top element of the stack by the top element of the stack.
  * @stack: double pointer to the stack
  * @line_no: the line in which this command is called
  * Return: nothing
  */
-void monty_mod(stack_t **stack, unsigned int line_no)
+void mod_handler(stack_t **stack, unsigned int line_no)
 {
-	int remainder, size;
-	stack_t *temp = *stack;
+	int size = stack_size((*stack)->next);
 
-	size = stack_size(*stack);
 	if (size < 2)
 	{
 		fprintf(stderr, "L%d: can't mod, stack too short\n", line_no);
-		exit(EXIT_FAILURE);
+		global.err_status = EXIT_FAILURE;
+		return;
 	}
-	if (!temp->n)
+	if (!(*stack)->next->n)
 	{
 		fprintf(stderr, "L%d: division by zero\n", line_no);
-		exit(EXIT_FAILURE);
+		global.err_status = EXIT_FAILURE;
+		return;
 	}
-	remainder = temp->prev->n % temp->n;
-	temp->prev->n = remainder;
-	*stack = temp->prev;
-	(*stack)->next = NULL;
-	temp->prev = NULL;
-	free(temp);
+	
+	(*stack)->next->next->n /= (*stack)->next->n;
+	pop_handler(stack, line_no);
 }
 
 /**
- * monty_pchar -  prints the char at the top of the stack,
+ * pchar_handler -  prints the char at the top of the stack,
  * followed by a new line
  * @stack: double pointer to the stack
  * @line_no: the line in which this command is called
  * Return: nothing
  */
-void monty_pchar(stack_t **stack, unsigned int line_no)
+void pchar_handler(stack_t **stack, unsigned int line_no)
 {
-	if (!(*stack))
+	if (!(*stack)->next)
 	{
 		fprintf(stderr, "L%d: can't pchar, stack empty\n", line_no);
-		exit(EXIT_FAILURE);
+		global.err_status = EXIT_FAILURE;
+		return;
 	}
-	if ((*stack)->n < 0 || (*stack)->n > 127)
+	if ((*stack)->next->n < 0 || (*stack)->next->n > 127)
 	{
 		fprintf(stderr, "L%d: can't pchar, value out of range\n", line_no);
-		exit(EXIT_FAILURE);
+		global.err_status = EXIT_FAILURE;
+		return;
 	}
-	printf("%c\n", (*stack)->n);
+
+	printf("%c\n", (*stack)->next->n);
 }
 
 
 /**
- * monty_pstr - Prints the string contained in a stack_t linked list.
+ * pstr_handler - Prints the string contained in a stack_t linked list.
  * @stack: A pointer to the top mode node of a stack_t linked list.
  * @line_number: The current working line number of a Monty bytecodes file.
  */
-void monty_pstr(stack_t **stack, unsigned int line_number)
+void pstr_handler(stack_t **stack, unsigned int line_number)
 {
 	stack_t *tmp = (*stack)->next;
 

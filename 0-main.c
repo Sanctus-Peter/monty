@@ -1,7 +1,7 @@
 #include "monty.h"
 
 
-char *toks_num = NULL;
+global_t global = {EXIT_SUCCESS, NULL};
 
 /**
  * main - starting point for monty interpreter
@@ -14,7 +14,6 @@ char *toks_num = NULL;
 int main(int argc, char *argv[])
 {
 	FILE *monty_fd = NULL;
-	int exit_code = EXIT_SUCCESS;
 
 	if (argc != 2)
 	{
@@ -29,8 +28,8 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 	
-	exit_code = exec_monty(monty_fd);
+	global.err_status = exec_monty(monty_fd);
 	fclose(monty_fd);
 
-	return (exit_code);
+	exit(global.err_status);
 }
