@@ -8,7 +8,7 @@
 stack_t *add_new_node(int number)
 {
 	stack_t *new_node = malloc(sizeof(stack_t));
-	new_node->n = no;
+	new_node->n = number;
 	new_node->prev = NULL;
 	new_node->next = NULL;
 	return (new_node);
@@ -22,7 +22,7 @@ stack_t *add_new_node(int number)
  */
 void push(stack_t **stack, unsigned int line_number)
 {
-	stack_t *start = stack, *temp;
+	stack_t *start = *stack, *temp;
 	int num = atoi(toks_num);
 	if (num == 0 && toks_num[0] != '0')
 	{
@@ -69,20 +69,4 @@ void pint(stack_t **stack, unsigned int line_number)
 		exit(EXIT_FAILURE);
 	}
 	fprintf(stdout, "%d\n", (*stack)->n);
-}
-
-/**
- * free_stack - frees a stack
- * @stack: the stack to free
- * Return: nothing
- */
-void free_stack(stack_t **stack)
-{
-	stack_t *temp = *stack, *previous = *stack;
-	while (temp)
-	{
-		temp = temp->next;
-		free(previous);
-	}
-	stack = NULL;
 }
