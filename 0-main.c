@@ -21,13 +21,13 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 	monty_fd = fopen(argv[1], "r");
-	
+
 	if (!monty_fd)
 	{
 		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
-	
+
 	global.err_status = exec_monty(monty_fd);
 	fclose(monty_fd);
 

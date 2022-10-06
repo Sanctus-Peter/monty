@@ -2,7 +2,7 @@
 
 /**
  * stack_init - initialize an empty stack
- * 
+ *
  * Return: pointer to the new stack
  */
 stack_t *stack_init(void)
@@ -52,6 +52,7 @@ void (*get_op_func(char *ops))(stack_t **, unsigned int)
 		{NULL, NULL}
 	};
 	int i = 0;
+
 	while (func[i].opcode)
 		if (strcmp(ops, func[i++].opcode) == 0)
 			return (func[--i].f);
@@ -82,12 +83,12 @@ int exec_monty(FILE *line_fd)
 			continue;
 
 		toks_str = strtok(line_read, DELIM);
-		
+
 		if (!toks_str || *toks_str == '#')
 			continue;
-		
+
 		global.toks_num = strtok(NULL, DELIM);
-		
+
 		op_func = get_op_func(toks_str);
 		if (!op_func)
 		{

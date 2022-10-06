@@ -10,7 +10,7 @@
 void div_handler(stack_t **stack, unsigned int line_no)
 {
 	int size = stack_size((*stack)->next);
-	
+
 	if (size < 2)
 	{
 		fprintf(stderr, "L%u: can't div, stack too short\n", line_no);
@@ -23,9 +23,9 @@ void div_handler(stack_t **stack, unsigned int line_no)
 		global.err_status = EXIT_FAILURE;
 		return;
 	}
-	
+
 	(*stack)->next->next->n /= (*stack)->next->n;
-	
+
 	pop_handler(stack, line_no);
 }
 
@@ -39,16 +39,16 @@ void div_handler(stack_t **stack, unsigned int line_no)
 void mul_handler(stack_t **stack, unsigned int line_no)
 {
 	int size = stack_size((*stack)->next);
-	
+
 	if (size < 2)
 	{
 		fprintf(stderr, "L%u: can't mul, stack too short\n", line_no);
 		global.err_status = EXIT_FAILURE;
 		return;
 	}
-	
+
 	(*stack)->next->next->n *= (*stack)->next->n;
-	
+
 	pop_handler(stack, line_no);
 }
 
@@ -75,7 +75,7 @@ void mod_handler(stack_t **stack, unsigned int line_no)
 		global.err_status = EXIT_FAILURE;
 		return;
 	}
-	
+
 	(*stack)->next->next->n %= (*stack)->next->n;
 	pop_handler(stack, line_no);
 }

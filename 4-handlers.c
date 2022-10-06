@@ -4,8 +4,9 @@
 /**
  * pop_handler - a function that removes the top element of the stack
  * @stack: double pointer to the stack
- * line_number: the line number where the pop command is called
- * Return : nothing
+ * @line_number: the line number where the pop command is called
+ *
+ * Return: nothing
  */
 void pop_handler(stack_t **stack, unsigned int line_number)
 {
@@ -13,15 +14,15 @@ void pop_handler(stack_t **stack, unsigned int line_number)
 
 	if (!(*stack)->next)
 	{
-		fprintf(stderr,"L%u: can't pop an empty stack\n", line_number);
+		fprintf(stderr, "L%u: can't pop an empty stack\n", line_number);
 		global.err_status = EXIT_FAILURE;
 		return;
 	}
 	temp = (*stack)->next->next;
 	free((*stack)->next);
 	if (temp)
-		temp->prev = * stack;
-	
+		temp->prev = *stack;
+
 	(*stack)->next = temp;
 }
 
@@ -75,8 +76,8 @@ void add_handler(stack_t **stack, unsigned int line_no)
 }
 
 /**
- * sub_handler - subtracts the top element of the stack from the second
- top element
+ * sub_handler - subtracts the top element of the stack
+ *				from the second top element
  * @stack: double pointer to the stack
  * @line_no: the line number where the pop command is called
  * Return: nothing
@@ -84,14 +85,14 @@ void add_handler(stack_t **stack, unsigned int line_no)
 void sub_handler(stack_t **stack, unsigned int line_no)
 {
 	int size = stack_size((*stack)->next);
-	
+
 	if (size < 2)
 	{
 		fprintf(stderr, "L%d: can't sub, stack too short\n", line_no);
 		global.err_status = EXIT_FAILURE;
 		return;
 	}
-	
+
 	(*stack)->next->next->n -= (*stack)->next->n;
 
 	pop_handler(stack, line_no);
