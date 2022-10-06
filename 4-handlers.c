@@ -38,7 +38,6 @@ void swap_handler(stack_t **stack, unsigned int line_no)
 	int stack_len;
 
 	stack_len = stack_size((*stack)->next);
-	printf(">>>%d\n", stack_len);
 	if (stack_len < 2)
 	{
 		fprintf(stderr, "L%d: can't swap, stack too short\n", line_no);
