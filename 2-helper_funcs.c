@@ -56,7 +56,7 @@ int stack_size(stack_t *stack)
 	while (temp != NULL)
 	{
 		i++;
-		temp = temp->prev;
+		temp = temp->next;
 	}
 	return (i);
 }
