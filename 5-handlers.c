@@ -13,13 +13,13 @@ void div_handler(stack_t **stack, unsigned int line_no)
 	
 	if (size < 2)
 	{
-		fprintf(stderr, "L%d: can't div, stack too short\n", line_no);
+		fprintf(stderr, "L%u: can't div, stack too short\n", line_no);
 		global.err_status = EXIT_FAILURE;
 		return;
 	}
 	if (!(*stack)->next->n)
 	{
-		fprintf(stderr, "L%d: division by zero\n", line_no);
+		fprintf(stderr, "L%u: division by zero\n", line_no);
 		global.err_status = EXIT_FAILURE;
 		return;
 	}
@@ -42,7 +42,7 @@ void mul_handler(stack_t **stack, unsigned int line_no)
 	
 	if (size < 2)
 	{
-		fprintf(stderr, "L%d: can't mul, stack too short\n", line_no);
+		fprintf(stderr, "L%u: can't mul, stack too short\n", line_no);
 		global.err_status = EXIT_FAILURE;
 		return;
 	}
@@ -65,18 +65,18 @@ void mod_handler(stack_t **stack, unsigned int line_no)
 
 	if (size < 2)
 	{
-		fprintf(stderr, "L%d: can't mod, stack too short\n", line_no);
+		fprintf(stderr, "L%u: can't mod, stack too short\n", line_no);
 		global.err_status = EXIT_FAILURE;
 		return;
 	}
 	if (!(*stack)->next->n)
 	{
-		fprintf(stderr, "L%d: division by zero\n", line_no);
+		fprintf(stderr, "L%u: division by zero\n", line_no);
 		global.err_status = EXIT_FAILURE;
 		return;
 	}
 	
-	(*stack)->next->next->n /= (*stack)->next->n;
+	(*stack)->next->next->n %= (*stack)->next->n;
 	pop_handler(stack, line_no);
 }
 
@@ -91,13 +91,13 @@ void pchar_handler(stack_t **stack, unsigned int line_no)
 {
 	if (!(*stack)->next)
 	{
-		fprintf(stderr, "L%d: can't pchar, stack empty\n", line_no);
+		fprintf(stderr, "L%u: can't pchar, stack empty\n", line_no);
 		global.err_status = EXIT_FAILURE;
 		return;
 	}
 	if ((*stack)->next->n < 0 || (*stack)->next->n > 127)
 	{
-		fprintf(stderr, "L%d: can't pchar, value out of range\n", line_no);
+		fprintf(stderr, "L%u: can't pchar, value out of range\n", line_no);
 		global.err_status = EXIT_FAILURE;
 		return;
 	}

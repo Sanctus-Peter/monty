@@ -72,5 +72,5 @@ void pint_handler(stack_t **stack, unsigned int line_number)
 		global.err_status = EXIT_FAILURE;
 		return;
 	}
-	fprintf(stdout, "%d\n", (*stack)->n);
+	fprintf(stdout, "%d\n", (*stack)->next->n);
 }

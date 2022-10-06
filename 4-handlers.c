@@ -92,7 +92,7 @@ void sub_handler(stack_t **stack, unsigned int line_no)
 		return;
 	}
 	
-	(*stack)->next->next->n += (*stack)->next->n;
+	(*stack)->next->next->n -= (*stack)->next->n;
 
 	pop_handler(stack, line_no);
 }
