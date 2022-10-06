@@ -35,10 +35,10 @@ void pop_handler(stack_t **stack, unsigned int line_number)
 void swap_handler(stack_t **stack, unsigned int line_no)
 {
 	stack_t *temp = (*stack)->next;
-	int stack_len;
+/*	int stack_len;
 
 	stack_len = stack_size((*stack)->next);
-	if (stack_len < 2)
+*/	if ((*stack)->next == NULL || (*stack)->next->next == NULL)
 	{
 		fprintf(stderr, "L%d: can't swap, stack too short\n", line_no);
 		global.err_status = EXIT_FAILURE;
