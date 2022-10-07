@@ -1,86 +1,6 @@
 #include "monty.h"
 
 /**
- * div_handler - divides the second top element of the
- * stack by the top element of the stack
- * @stack: double pointer to the stack
- * @line_no: the line in which this command is called
- * Return: nothing
- */
-void div_handler(stack_t **stack, unsigned int line_no)
-{
-	int size = stack_size((*stack)->next);
-
-	if (size < 2)
-	{
-		fprintf(stderr, "L%u: can't div, stack too short\n", line_no);
-		global.err_status = EXIT_FAILURE;
-		return;
-	}
-	if (!(*stack)->next->n)
-	{
-		fprintf(stderr, "L%u: division by zero\n", line_no);
-		global.err_status = EXIT_FAILURE;
-		return;
-	}
-
-	(*stack)->next->next->n /= (*stack)->next->n;
-
-	pop_handler(stack, line_no);
-}
-
-/**
- * mul_handler - multiplies the second top element of the stack with
- * the top element of the stack
- * @stack: double pointer to the stack
- * @line_no: the line in which this command is called
- * Return: nothing
- */
-void mul_handler(stack_t **stack, unsigned int line_no)
-{
-	int size = stack_size((*stack)->next);
-
-	if (size < 2)
-	{
-		fprintf(stderr, "L%u: can't mul, stack too short\n", line_no);
-		global.err_status = EXIT_FAILURE;
-		return;
-	}
-
-	(*stack)->next->next->n *= (*stack)->next->n;
-
-	pop_handler(stack, line_no);
-}
-
-/**
- * mod_handler - computes the rest of the division of the
- * second top element of the stack by the top element of the stack.
- * @stack: double pointer to the stack
- * @line_no: the line in which this command is called
- * Return: nothing
- */
-void mod_handler(stack_t **stack, unsigned int line_no)
-{
-	int size = stack_size((*stack)->next);
-
-	if (size < 2)
-	{
-		fprintf(stderr, "L%u: can't mod, stack too short\n", line_no);
-		global.err_status = EXIT_FAILURE;
-		return;
-	}
-	if (!(*stack)->next->n)
-	{
-		fprintf(stderr, "L%u: division by zero\n", line_no);
-		global.err_status = EXIT_FAILURE;
-		return;
-	}
-
-	(*stack)->next->next->n %= (*stack)->next->n;
-	pop_handler(stack, line_no);
-}
-
-/**
  * pchar_handler -  prints the char at the top of the stack,
  * followed by a new line
  * @stack: double pointer to the stack
@@ -122,6 +42,61 @@ void pstr_handler(stack_t **stack, unsigned int line_number)
 	}
 
 	printf("\n");
+
+	(void)line_number;
+}
+
+
+
+/**
+ * rotr_handler - Rotates the bottom value of a stack_t linked list to the top.
+ * @stack: A pointer to the top mode node of a stack_t linked list.
+ * @line_number: The current working line number of a Monty bytecodes file.
+ */
+void rotr_handler(stack_t **stack, unsigned int line_number)
+{
+	stack_t *top, *bottom;
+
+	if ((*stack)->next == NULL || (*stack)->next->next == NULL)
+		return;
+
+	top = (*stack)->next;
+	bottom = (*stack)->next;
+	while (bottom->next != NULL)
+		bottom = bottom->next;
+
+	bottom->prev->next = NULL;
+	(*stack)->next = bottom;
+	bottom->prev = *stack;
+	bottom->next = top;
+	top->prev = bottom;
+
+	(void)line_number;
+}
+
+
+/**
+ * rotl_handler - Rotates the top value of a stack_t linked list to the bottom.
+ * @stack: A pointer to the top mode node of a stack_t linked list.
+ * @line_number: The current working line number of a Monty bytecodes file.
+ */
+void rotl_handler(stack_t **stack, unsigned int line_number)
+{
+	stack_t *top, *bottom;
+
+	if ((*stack)->next == NULL || (*stack)->next->next == NULL)
+		return;
+
+	top = (*stack)->next;
+	bottom = (*stack)->next;
+	while (bottom->next != NULL)
+		bottom = bottom->next;
+
+	top->next->prev = *stack;
+	(*stack)->next = top->next;
+	bottom->next = top;
+	top->next = NULL;
+	top->prev = bottom;
 
 	(void)line_number;
 }

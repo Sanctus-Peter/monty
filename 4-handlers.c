@@ -2,57 +2,85 @@
 
 
 /**
- * pop_handler - a function that removes the top element of the stack
+ * div_handler - divides the second top element of the
+ * stack by the top element of the stack
  * @stack: double pointer to the stack
- * @line_number: the line number where the pop command is called
- *
+ * @line_no: the line in which this command is called
  * Return: nothing
  */
-void pop_handler(stack_t **stack, unsigned int line_number)
+void div_handler(stack_t **stack, unsigned int line_no)
 {
-	stack_t *temp;
+	int size = stack_size((*stack)->next);
 
-	if (!(*stack)->next)
+	if (size < 2)
 	{
-		fprintf(stderr, "L%u: can't pop an empty stack\n", line_number);
+		fprintf(stderr, "L%u: can't div, stack too short\n", line_no);
 		global.err_status = EXIT_FAILURE;
 		return;
 	}
-	temp = (*stack)->next->next;
-	free((*stack)->next);
-	if (temp)
-		temp->prev = *stack;
+	if (!(*stack)->next->n)
+	{
+		fprintf(stderr, "L%u: division by zero\n", line_no);
+		global.err_status = EXIT_FAILURE;
+		return;
+	}
 
-	(*stack)->next = temp;
+	(*stack)->next->next->n /= (*stack)->next->n;
+
+	pop_handler(stack, line_no);
 }
 
 /**
- * swap_handler - swaps the top two elements of the stack
+ * mul_handler - multiplies the second top element of the stack with
+ * the top element of the stack
  * @stack: double pointer to the stack
- * @line_no: the line number where the pop command is called
+ * @line_no: the line in which this command is called
  * Return: nothing
  */
-void swap_handler(stack_t **stack, unsigned int line_no)
+void mul_handler(stack_t **stack, unsigned int line_no)
 {
-	stack_t *temp = (*stack)->next;
-	int stack_len;
+	int size = stack_size((*stack)->next);
 
-	stack_len = stack_size((*stack)->next);
-	if (stack_len < 2)
+	if (size < 2)
 	{
-		fprintf(stderr, "L%d: can't swap, stack too short\n", line_no);
+		fprintf(stderr, "L%u: can't mul, stack too short\n", line_no);
 		global.err_status = EXIT_FAILURE;
 		return;
 	}
-	temp = temp->next;
-	(*stack)->next->next = temp->next;
-	(*stack)->next->prev = temp;
-	if (temp->next)
-		temp->next->prev = (*stack)->next;
-	temp->next = (*stack)->next;
-	temp->prev = *stack;
-	(*stack)->next = temp;
+
+	(*stack)->next->next->n *= (*stack)->next->n;
+
+	pop_handler(stack, line_no);
 }
+
+/**
+ * mod_handler - computes the rest of the division of the
+ * second top element of the stack by the top element of the stack.
+ * @stack: double pointer to the stack
+ * @line_no: the line in which this command is called
+ * Return: nothing
+ */
+void mod_handler(stack_t **stack, unsigned int line_no)
+{
+	int size = stack_size((*stack)->next);
+
+	if (size < 2)
+	{
+		fprintf(stderr, "L%u: can't mod, stack too short\n", line_no);
+		global.err_status = EXIT_FAILURE;
+		return;
+	}
+	if (!(*stack)->next->n)
+	{
+		fprintf(stderr, "L%u: division by zero\n", line_no);
+		global.err_status = EXIT_FAILURE;
+		return;
+	}
+
+	(*stack)->next->next->n %= (*stack)->next->n;
+	pop_handler(stack, line_no);
+}
+
 
 /**
  * add_handler - adds the top two elements of the stack
