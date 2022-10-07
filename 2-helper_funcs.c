@@ -30,7 +30,7 @@ int is_digit(char *var)
 stack_t *add_new_node(int number)
 {
 	stack_t *new_node = malloc(sizeof(stack_t));
-	
+
 	if (!new_node)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
